@@ -1,4 +1,4 @@
-import { Ranking } from '../components/Ranking/Ranking';
+import { Ranking } from '../components/ranking/Ranking';
 import { useApiContext, useAuthentifiedContext, useContinuedAsGuestContext } from '../components/context/FcMadBoysContext';
 import { AddEvent } from '../components/events/AddEvent';
 import { EventsList } from '../components/events/EventsList';
