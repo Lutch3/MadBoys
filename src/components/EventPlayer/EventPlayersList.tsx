@@ -26,23 +26,19 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
               <span style={{width:'125px'}}> {player?.name} </span>
               <div  style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
                 <span>Goals</span>
-                <input style={{width:'50px'}} value={eventPlayer.goals} type="number" min="0" onChange={(event) => updateEventPlayerGoals(eventPlayer, parseInt(event.target.value))}></input>
+                <input style={{marginLeft:'5px',width:'35px', textAlign:'center'}} value={eventPlayer.goals} type="number" min="0" onChange={(event) => updateEventPlayerGoals(eventPlayer, parseInt(event.target.value))}></input>
               </div>
               <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                <Icon.PersonBadge style={{marginRight:'5px'}}/>
+                <Icon.PersonBadgeFill style={{marginRight:'5px',color:'#e1cf32'}}/>
                 <input title='Yellow Card?' type="checkbox" checked={eventPlayer.hasYellowCard} onChange={(event) => updateEventPlayerYellowCard(eventPlayer, event.target.checked)}></input>
               </div>
               <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                <Icon.PersonBadgeFill style={{marginRight:'5px'}}/>
+                <Icon.PersonBadgeFill style={{marginRight:'5px',color:'red'}}/>
                 <input title='Red Card?' type="checkbox" checked={eventPlayer.hasRedCard} onChange={(event) => updateEventPlayerRedCard(eventPlayer, event.target.checked)}></input>
               </div>
               <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
                 <Icon.PersonLock style={{marginRight:'5px'}}/>
                 <input title='Delegue?' type="checkbox" checked={eventPlayer.isDelegue} onChange={(event) => updateEventPlayerDelegue(eventPlayer, event.target.checked)}></input>
-              </div>
-              <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                <Icon.PersonPlus style={{marginRight:'5px'}}/>
-                <input title='Captain' type="checkbox" checked={eventPlayer.isCaptain} onChange={(event) => updateEventPlayerCaptain(eventPlayer, event.target.checked)}></input>
               </div>
             </div>
           </ListGroup.Item>
@@ -72,11 +68,6 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
   
   const updateEventPlayerDelegue = (eventPlayer: EventPlayer, value: boolean) => {
     eventPlayer.isDelegue = value;
-    update(eventPlayer);
-  };
-
-  const updateEventPlayerCaptain = (eventPlayer: EventPlayer, value: boolean) => {
-    eventPlayer.isCaptain = value;
     update(eventPlayer);
   };
 

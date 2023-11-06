@@ -23,7 +23,6 @@ const Ranking: React.FC = memo(() => {
           games: 0,
           goals: 0,
           delegue:0,
-          captain:0,
           yellowCard:0,
           redCard:0,
         });
@@ -42,9 +41,6 @@ const Ranking: React.FC = memo(() => {
       if (isDelegue) {
         playerData.delegue++;
         playerData.games--;
-      }
-      if (isCaptain) {
-        playerData.captain++;
       }
 
       playerData.ratio = 0;
@@ -71,10 +67,9 @@ const Ranking: React.FC = memo(() => {
             <td>{eventPlayer?.name}</td>
             <td>{ranking.games}</td>
             <td>{ranking.goals}</td>
-            <td>{ranking.delegue}</td>
-            <td>{ranking.captain}</td>
             <td>{ranking.yellowCard}</td>
             <td>{ranking.redCard}</td>
+            <td>{ranking.delegue}</td>
             <td>{ranking.ratio} %</td>
           </tr>
         );
@@ -90,10 +85,9 @@ const Ranking: React.FC = memo(() => {
             <th scope="col">Name</th>
             <th scope="col">Games#</th>
             <th scope="col">Goals#</th>
-            <th scope="col">Delegue#</th>
-            <th scope="col">Captain#</th>
             <th scope="col">Yellow Card#</th>
             <th scope="col">Red Card#</th>
+            <th scope="col">Delegue#</th>
             <th scope="col">Ratio Games/Goals</th>
           </tr>
         </thead>
