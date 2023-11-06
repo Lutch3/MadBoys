@@ -27,7 +27,7 @@ export const FcMadBoys: React.FC = () => {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <img src={logo} className="logo" style={{width:'auto', height:'auto'}}/>
+        <img src={logo} className="logo" style={{ width: 'auto', height: 'auto' }} />
         <h3>FC Mad Boys</h3>
         {isAuthentified && (
           <span style={{ width: '25px' }} className="logout" onClick={doLogout}>
@@ -35,15 +35,18 @@ export const FcMadBoys: React.FC = () => {
           </span>
         )}
         {!isAuthentified && hasContinuedAsGuest && (
-          <span style={{ width: '25px' }} className="logout" onClick={() => {setHasContinuedAsGuest(false); setIsAuthentified(false) }}>
-            Login
-          </span>
+          <span style={{ width: '25px' }}
+                className="logout"
+                onClick={() => {
+                    setHasContinuedAsGuest(false);
+                    setIsAuthentified(false);
+                }}> Login </span>
         )}
       </div>
 
-      {(!isAuthentified && !hasContinuedAsGuest) && <Login />}
+      {!isAuthentified && !hasContinuedAsGuest && <Login />}
 
-      {(isAuthentified || hasContinuedAsGuest) && 
+      {(isAuthentified || hasContinuedAsGuest) && (
         <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
             <div style={{ margin: '5px' }} className="card">
@@ -53,30 +56,30 @@ export const FcMadBoys: React.FC = () => {
               </div>
               <Ranking />
             </div>
-            { isAuthentified &&
-            <div style={{ margin: '5px', height: '525px' }} className="card">
-              <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-                <h2>Players</h2>
-                <Icon.Person size={40} style={{ paddingLeft: '5px' }} />
+            {isAuthentified && (
+              <div style={{ margin: '5px', height: '525px' }} className="card">
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+                  <h2>Players</h2>
+                  <Icon.Person size={40} style={{ paddingLeft: '5px' }} />
+                </div>
+                {isAuthentified && <AddPlayer />}
+                <div style={{ paddingTop: '5px', height: 'auto', overflowY: 'scroll' }}>
+                  <PlayersList />
+                </div>
               </div>
-              {isAuthentified && <AddPlayer />}
-              <div style={{ paddingTop: '5px', height: 'auto', overflowY: 'scroll' }}>
-                <PlayersList />
+            )}
+            {isAuthentified && (
+              <div style={{ margin: '5px', height: '525px' }} className="card">
+                <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
+                  <h2>Teams</h2>
+                  <Icon.Flag size={40} style={{ paddingLeft: '5px' }} />
+                </div>
+                {isAuthentified && <AddTeam />}
+                <div style={{ paddingTop: '5px', height: 'auto', overflowY: 'scroll' }}>
+                  <TeamsList />
+                </div>
               </div>
-            </div>
-            }
-            {isAuthentified && 
-            <div style={{ margin: '5px', height: '525px' }} className="card">
-              <div style={{ textAlign: 'center', width: '100%', display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'center' }}>
-                <h2>Teams</h2>
-                <Icon.Flag size={40} style={{ paddingLeft: '5px' }} />
-              </div>
-              {isAuthentified && <AddTeam />}
-              <div style={{ paddingTop: '5px', height: 'auto', overflowY: 'scroll' }}>
-                <TeamsList />
-              </div>
-            </div>
-          }
+            )}
           </div>
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
             <div style={{ margin: '5px', width: '100%' }} className="card">
@@ -86,13 +89,23 @@ export const FcMadBoys: React.FC = () => {
               </div>
               {isAuthentified && <AddEvent />}
               <div style={{ paddingTop: '5px' }}>
-                <EventsList readOnly={!isAuthentified}/>
+                <EventsList readOnly={!isAuthentified} />
               </div>
             </div>
+            {!isAuthentified &&
+            <div style={{ margin: '5px', width: '100%', height: '600px' }} className="card">
+              <div style={{ textAlign: 'center', width: '100%',height:'100%', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center' }}>
+                <h2>BZVC : Classement</h2>
+                <iframe style={{ width: '100%', height: '100%' }} src={'https://www.bzvc.be/index.php?kind=klassement&reeks=1'} />
+              </div>
+            </div> 
+            }
           </div>
         </div>
-      }
-      <p style={{marginTop:'25px'}}className="read-the-docs">Created by Lutch ^^</p>
+      )}
+      <p style={{ marginTop: '25px' }} className="read-the-docs">
+        Created by Lutch ^^
+      </p>
     </>
   );
 };
