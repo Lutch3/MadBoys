@@ -6,7 +6,6 @@ import { useApiContext, useAuthentifiedContext, useEventsContext, useTeamsContex
 import { removeTeam } from '../../service/FcMadBoysService';
 import * as Icon from 'react-bootstrap-icons';
 import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
-import { toast } from 'react-toastify';
 
 const TeamsList: React.FC = memo(() => {
   const AnswerEnum = { YES: 'Yes', NO: 'No' };
