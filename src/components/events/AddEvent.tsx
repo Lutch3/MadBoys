@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect } from 'react';
 
 import './AddEvent.css';
 import { useApiContext, useEventsContext, useTeamsContext } from '../context/FcMadBoysContext';

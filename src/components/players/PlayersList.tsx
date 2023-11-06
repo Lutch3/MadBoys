@@ -10,7 +10,7 @@ import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
 
 const PlayersList: React.FC = memo(() => {
 
-    const [showModal, setShowModal] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
 
     // const handleClose = () => setShowModal(false);
     // const handleShow = () => setShowModal(true);
@@ -38,11 +38,11 @@ const PlayersList: React.FC = memo(() => {
         });
     }
 
-    const handleButtonClicked = (answer: 'Yes'|'No') => {
-    //   handleClose();
-      console.log(answer);
+    // const handleButtonClicked = (answer: 'Yes'|'No') => {
+    // //   handleClose();
+    //   console.log(answer);
 
-    }
+    // }
 
     return (
         <>  { players && players.length > 0 &&
@@ -51,7 +51,7 @@ const PlayersList: React.FC = memo(() => {
 
             {(!players || players.length === 0) && <span>Please add players</span>}
 
-            <ModalDeleteDialog showModal={showModal} buttonClickedHandler={handleButtonClicked} />
+            {/* <ModalDeleteDialog showModal={showModal} buttonClickedHandler={handleButtonClicked} /> */}
         </>
     );
 });
