@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect } from 'react';
 
 import './PlayersList.css';
 import { Player } from '../../model/models';
@@ -6,7 +6,7 @@ import { ListGroup } from 'react-bootstrap';
 import { useApiContext, useAuthentifiedContext, usePlayersContext } from '../context/FcMadBoysContext';
 import { removePlayer } from '../../service/FcMadBoysService';
 import * as Icon from 'react-bootstrap-icons';
-import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
+// import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
 
 const PlayersList: React.FC = memo(() => {
 
