@@ -9,6 +9,7 @@ import { PlayersList } from '../components/players/PlayersList';
 import { Login } from '../components/Login/Login';
 import * as Icon from 'react-bootstrap-icons';
 import { logout } from '../service/FcMadBoysService';
+import logo from '../assets/madLogo.jpg';
 
 export const FcMadBoys: React.FC = () => {
   const isAuthentified = useAuthentifiedContext();
@@ -26,7 +27,7 @@ export const FcMadBoys: React.FC = () => {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <img src="./src/assets/madLogo.jpg" className="logo" style={{width:'auto', height:'auto'}}/>
+        <img src={logo} className="logo" style={{width:'auto', height:'auto'}}/>
         <h3>FC Mad Boys</h3>
         {isAuthentified && (
           <span style={{ width: '25px' }} className="logout" onClick={doLogout}>
