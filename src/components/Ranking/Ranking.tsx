@@ -1,19 +1,23 @@
-import { memo, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useEventPlayersContext, usePlayersContext } from '../context/FcMadBoysContext';
 import { EventPlayer } from '../../model/models';
+import { RankingColumnSort } from '../rankingColumnSort/RankingColumnSort';
 
-const Ranking: React.FC = memo(() => {
+const Ranking: React.FC = (() => {
   const eventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
 
+  const [rankingRows, setRankingRows] = useState([]);
+
+  let rankingArray:any[] = [];
+
   useEffect(() => {
-    console.log('Rendering Ranking');
+    calculateRankingRows('ratio','Asc');
   }, [eventPlayers]);
 
-  const calculateRankingRows = () => {
+  const createRankingArray = () => {
     const rankingMap = new Map();
-
     eventPlayers.forEach((eventPlayer:EventPlayer) => {
       const { playerId, hasYellowCard, hasRedCard, isDelegue, goals } = eventPlayer;
 
@@ -50,14 +54,14 @@ const Ranking: React.FC = memo(() => {
       rankingMap.set(playerId, playerData);
     });
 
-    const rankingArray = Array.from(rankingMap.values());
-    return rankingArray
-      .sort((a: any, b: any) => {
-        if (a.ratio > b.ratio) return -1;
-        else if (a.ratio < b.ratio) return 1;
-        return 0;
-      })
-      .map((ranking, index) => {
+    return Array.from(rankingMap.values());
+  }
+
+  const calculateRankingRows = (prop:string,sortDirection:'Asc'|'Desc') => {
+    rankingArray = createRankingArray();
+    const sortCompareFunction = getSortCompareFunction(prop,sortDirection);
+    rankingArray.sort(sortCompareFunction);
+    setRankingRows(rankingArray.map( (ranking, index) => {
         const eventPlayer = players.find((p) => p.id === ranking.playerId);
         let position = 0;
         position++;
@@ -73,8 +77,16 @@ const Ranking: React.FC = memo(() => {
             <td>{ranking.ratio} %</td>
           </tr>
         );
-      });
+      }));
   };
+
+  const getSortCompareFunction = (property:string, sortDirection:'Asc'|'Desc') => {
+    return (a: any, b: any) => {
+      if (a[property] > b[property]) return sortDirection === 'Asc' ? -1 : 1;
+      else if (a[property] < b[property]) return sortDirection === 'Asc' ? 1 : -1;
+      return 0;
+    }
+  }
 
   return (
     <>
@@ -83,15 +95,45 @@ const Ranking: React.FC = memo(() => {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Games#</th>
-            <th scope="col">Goals#</th>
-            <th scope="col">Yellow Card#</th>
-            <th scope="col">Red Card#</th>
-            <th scope="col">Delegue#</th>
-            <th scope="col">Ratio Games/Goals</th>
+            <th scope="col">
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+              <span>Games#</span>
+              <RankingColumnSort property={'games'} callbackFunction={calculateRankingRows}/>
+              </div>
+            </th>
+            <th scope="col">
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+              <span>#Goals</span>
+              <RankingColumnSort property={'goals'} callbackFunction={calculateRankingRows}/>
+              </div>
+            </th>
+            <th scope="col">
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+              <span>#Yellow Card</span>
+              <RankingColumnSort property={'yellowCard'} callbackFunction={calculateRankingRows}/>
+              </div>
+            </th>
+            <th scope="col">
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+              <span>#Red Card</span>
+              <RankingColumnSort property={'redCard'} callbackFunction={calculateRankingRows}/>
+              </div>
+            </th>
+            <th scope="col">
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+              <span>#Delegue</span>
+              <RankingColumnSort property={'delegue'} callbackFunction={calculateRankingRows}/>
+              </div>
+            </th>
+            <th scope="col">
+              <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+              <span>Ratio Games/Goals</span>
+              <RankingColumnSort property={'ratio'} callbackFunction={calculateRankingRows}/>
+              </div>
+            </th>
           </tr>
         </thead>
-        <tbody>{calculateRankingRows()}</tbody>
+        <tbody>{rankingRows}</tbody>
       </table>
     </>
   );

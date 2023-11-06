@@ -4,9 +4,11 @@ import { Button, Modal } from 'react-bootstrap';
 interface ModalDeleteDialogProps {
     showModal:boolean;
     buttonClickedHandler:Function;
+    title:string;
+    bodyText:string;
 }
 
-const ModalDeleteDialog: React.FC<ModalDeleteDialogProps> = memo(({showModal,buttonClickedHandler}:ModalDeleteDialogProps) => {
+const ModalDeleteDialog: React.FC<ModalDeleteDialogProps> = memo(({showModal,buttonClickedHandler, title, bodyText}:ModalDeleteDialogProps) => {
     return (
         <Modal
           show={showModal}
@@ -16,12 +18,12 @@ const ModalDeleteDialog: React.FC<ModalDeleteDialogProps> = memo(({showModal,but
         >
           <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">
-              Deleting...
+              {title}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>
-              Are you sure that you want to delete this item?
+              {bodyText}
             </p>
           </Modal.Body>
           <Modal.Footer>

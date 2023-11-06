@@ -1,15 +1,15 @@
-import './App.css'
+import './App.css';
 import { FcMadBoys } from './app/FcMadBoys';
-import { FcMadBoysProvider} from './components/context/FcMadBoysContext';
+import { FcMadBoysProvider } from './components/context/FcMadBoysContext';
 
 function App() {
   return (
     <>
       <FcMadBoysProvider>
-        <FcMadBoys/>
+        <FcMadBoys />
       </FcMadBoysProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

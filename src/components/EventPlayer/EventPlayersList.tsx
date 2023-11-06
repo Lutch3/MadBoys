@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import './EventPlayersList.css';
 import { ListGroup } from 'react-bootstrap';
@@ -6,16 +6,33 @@ import { useApiContext, useAuthentifiedContext, useEventPlayersContext, usePlaye
 import { removeEventPlayer, updateEventPlayer } from '../../service/FcMadBoysService';
 import * as Icon from 'react-bootstrap-icons';
 import { EventPlayer } from '../../model/models';
+import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
 
 interface AddEventPlayerProps {
   eventId: string;
 }
 
 const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEventPlayerProps) => {
+  const AnswerEnum = { YES: 'Yes', NO: 'No' };
+
+  const [showModal, setShowModal] = useState(false);
+  const [eventPlayer2delete, setEventPlayer2delete] = useState({id:''
+                                                              ,eventId: ''
+                                                              ,playerId: ''
+                                                              ,hasYellowCard: false
+                                                              ,hasRedCard: false
+                                                              ,isDelegue: false
+                                                              ,isCaptain: false
+                                                              ,goals:0});
+
+  
   const eventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
   const isAuthentified = useAuthentifiedContext();
   const { setEventPlayers } = useApiContext();
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   const eventPlayersListGroups = eventPlayers?.filter((ep) => ep.eventId === eventId).map((eventPlayer: any) => {
       const player = players.find((p) => p.id === eventPlayer.playerId);
@@ -79,11 +96,19 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
   }
 
   const deleteEventPlayer = (eventPlayer: any) => {
-    removeEventPlayer(eventPlayer).then(() => {
-      let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));
-      eventPlayersArray = eventPlayersArray.filter((item) => item.id !== eventPlayer.id);
-      setEventPlayers(eventPlayersArray);
-    });
+    setEventPlayer2delete(eventPlayer);
+    handleShow();
+  };
+
+  const handleButtonClicked = (answer: 'Yes' | 'No') => {
+    if (answer === AnswerEnum.YES) {
+      removeEventPlayer(eventPlayer2delete).then(() => {
+        let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));
+        eventPlayersArray = eventPlayersArray.filter((item) => item.id !== eventPlayer2delete.id);
+        setEventPlayers(eventPlayersArray);
+      });
+    }
+    handleClose();
   };
 
   return (
@@ -95,6 +120,12 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
       )}
 
       {(!eventPlayers || eventPlayers.length === 0) && <span>Please add Event Players</span>}
+      <ModalDeleteDialog
+        showModal={showModal}
+        buttonClickedHandler={handleButtonClicked}
+        title={`Deleting...`}
+        bodyText={`Are you sure you want to delete this record?`}
+      />
     </>
   );
 });
