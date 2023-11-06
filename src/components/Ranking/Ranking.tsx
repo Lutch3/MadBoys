@@ -15,7 +15,7 @@ const Ranking: React.FC = memo(() => {
     const rankingMap = new Map();
 
     eventPlayers.forEach((eventPlayer:EventPlayer) => {
-      const { playerId, hasYellowCard, hasRedCard, isDelegue, isCaptain, goals } = eventPlayer;
+      const { playerId, hasYellowCard, hasRedCard, isDelegue, goals } = eventPlayer;
 
       if (!rankingMap.has(playerId)) {
         rankingMap.set(playerId, {

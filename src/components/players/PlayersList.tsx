@@ -12,8 +12,8 @@ const PlayersList: React.FC = memo(() => {
 
     const [showModal, setShowModal] = useState(false);
 
-    const handleClose = () => setShowModal(false);
-    const handleShow = () => setShowModal(true);
+    // const handleClose = () => setShowModal(false);
+    // const handleShow = () => setShowModal(true);
 
     const players = usePlayersContext();
     const isAuthentified = useAuthentifiedContext();

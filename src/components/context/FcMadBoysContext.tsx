@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
+import { createContext, useContext, useReducer, useEffect, useMemo} from 'react';
 import { EventPlayer, Team, Player } from '../../model/models';
 import { findAll } from '../../service/FcMadBoysService';
 
@@ -81,7 +81,7 @@ const reducer = (state: State, action: Actions): State => {
 };
 
 const playersBaseValue: Player[] = [];
-const teamsBaseValue: teams[] = [];
+const teamsBaseValue: Team[] = [];
 const eventsBaseValue: Event[] = [];
 const eventPlayersBaseValue: EventPlayer[] = [];
 

@@ -72,7 +72,7 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
   };
 
   const update = (eventPlayer:EventPlayer) => {
-    updateEventPlayer(eventPlayer).then((updatedEventPlayer) => {
+    updateEventPlayer(eventPlayer).then(() => {
       let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));
       setEventPlayers(eventPlayersArray);
     });
