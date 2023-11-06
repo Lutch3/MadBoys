@@ -8,7 +8,7 @@ const Ranking: React.FC = (() => {
   const eventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
 
-  const [rankingRows, setRankingRows] = useState([]);
+  const [rankingRows, setRankingRows] = useState<any[]>([]);
 
   let rankingArray:any[] = [];
 
@@ -61,23 +61,24 @@ const Ranking: React.FC = (() => {
     rankingArray = createRankingArray();
     const sortCompareFunction = getSortCompareFunction(prop,sortDirection);
     rankingArray.sort(sortCompareFunction);
-    setRankingRows(rankingArray.map( (ranking, index) => {
-        const eventPlayer = players.find((p) => p.id === ranking.playerId);
-        let position = 0;
-        position++;
-        return (
-          <tr key={ranking.playerId}>
-            <td>{index+1}</td>
-            <td>{eventPlayer?.name}</td>
-            <td>{ranking.games}</td>
-            <td>{ranking.goals}</td>
-            <td>{ranking.yellowCard}</td>
-            <td>{ranking.redCard}</td>
-            <td>{ranking.delegue}</td>
-            <td>{ranking.ratio} %</td>
-          </tr>
-        );
-      }));
+    const _rankingRows:any[] = rankingArray.map( (ranking, index) => {
+      const eventPlayer = players.find((p) => p.id === ranking.playerId);
+      let position = 0;
+      position++;
+      return (
+        <tr key={ranking.playerId}>
+          <td>{index+1}</td>
+          <td>{eventPlayer?.name}</td>
+          <td>{ranking.games}</td>
+          <td>{ranking.goals}</td>
+          <td>{ranking.yellowCard}</td>
+          <td>{ranking.redCard}</td>
+          <td>{ranking.delegue}</td>
+          <td>{ranking.ratio} %</td>
+        </tr>
+      );
+    })
+    setRankingRows(_rankingRows);
   };
 
   const getSortCompareFunction = (property:string, sortDirection:'Asc'|'Desc') => {
