@@ -32,11 +32,6 @@ export const useAuthentifiedContext = () => {
   return useContext(authentifiedContext);
 };
 
-const continuedAsGuestContext = createContext<State['hasContinuedAsGuest']>(false);
-export const useContinuedAsGuestContext = () => {
-  return useContext(continuedAsGuestContext);
-};
-
 const apiContext = createContext<{ [key: string]: (...args: any[]) => unknown }>({});
 export const useApiContext = () => {
   return useContext(apiContext);
@@ -49,12 +44,10 @@ type Actions =
   | { type: 'updateEventPlayers'; eventPlayers: any }
   | { type: 'updateIsLoading'; isLoading: boolean }
   | { type: 'updateIsAuthentified'; isAuthentified: boolean }
-  | { type: 'updateHasContinuedAsGuest'; hasContinuedAsGuest: boolean };
 
 type State = {
   isLoading: boolean;
   isAuthentified: boolean;
-  hasContinuedAsGuest: boolean;
   players: Player[];
   teams: Team[];
   events: Event[];
@@ -67,8 +60,6 @@ const reducer = (state: State, action: Actions): State => {
       return { ...state, isLoading: action.isLoading };
     case 'updateIsAuthentified':
       return { ...state, isAuthentified: action.isAuthentified };
-    case 'updateHasContinuedAsGuest':
-      return { ...state, hasContinuedAsGuest: action.hasContinuedAsGuest };
     case 'updatePlayers':
       return { ...state, players: action.players };
     case 'updateTeams':
@@ -88,7 +79,6 @@ const eventPlayersBaseValue: EventPlayer[] = [];
 const initialState: State = {
   isLoading: true,
   isAuthentified: false,
-  hasContinuedAsGuest: false,
   players: playersBaseValue,
   teams: teamsBaseValue,
   events: eventsBaseValue,
@@ -159,18 +149,13 @@ export const FcMadBoysProvider = ({ children }: { children: React.ReactNode }) =
       dispatch({ type: 'updateIsAuthentified', isAuthentified: isAuthentified });
     };
 
-    const setHasContinuedAsGuest = (hasContinuedAsGuest: boolean) => {
-      dispatch({ type: 'updateHasContinuedAsGuest', hasContinuedAsGuest: hasContinuedAsGuest });
-    };
-
-    return { setPlayers, setTeams: setTeams, setEvents, setEventPlayers, setIsAuthentified, setHasContinuedAsGuest };
+    return { setPlayers, setTeams: setTeams, setEvents, setEventPlayers, setIsAuthentified };
   }, []);
 
   return (
     <apiContext.Provider value={api}>
       <loadingContext.Provider value={state.isLoading}>
         <authentifiedContext.Provider value={state.isAuthentified}>
-          <continuedAsGuestContext.Provider value={state.hasContinuedAsGuest}>
             <playersContext.Provider value={state.players}>
               <teamsContext.Provider value={state.teams}>
                 <eventsContext.Provider value={state.events}>
@@ -178,7 +163,6 @@ export const FcMadBoysProvider = ({ children }: { children: React.ReactNode }) =
                 </eventsContext.Provider>
               </teamsContext.Provider>
             </playersContext.Provider>
-          </continuedAsGuestContext.Provider>
         </authentifiedContext.Provider>
       </loadingContext.Provider>
     </apiContext.Provider>

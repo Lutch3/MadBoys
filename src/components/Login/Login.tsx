@@ -7,7 +7,7 @@ const Login: React.FC = memo(() => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  const { setIsAuthentified, setHasContinuedAsGuest } = useApiContext();
+  const { setIsAuthentified } = useApiContext();
 
   useEffect(() => {
     console.log('Rendering Login');
@@ -28,15 +28,12 @@ const Login: React.FC = memo(() => {
           });
     }
   };
-  const doContinueAsGuest = () => {
-    setHasContinuedAsGuest(true);
-  };
 
   return (
     <>
-      <div style={{ width:'auto',display: 'flex', flexDirection: 'column', flexWrap: 'wrap', alignContent: 'center', alignItems: 'center' }}>
+      <div style={{ width:'auto',display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', alignItems: 'center', justifyContent:'center' }}>
         <span style={{ paddingRight: '5px' }} className="">
-          UserName
+          User Name
         </span>
         <input type="text" value={userName} onChange={(event) => setUserName(event.target.value)} />
         <span style={{ paddingLeft: '5px', paddingRight: '5px' }} className="">
@@ -44,7 +41,6 @@ const Login: React.FC = memo(() => {
         </span>
         <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
         <button style={{ marginLeft: '5px' }} onClick={doLogin}>Login</button>
-        <button style={{ marginLeft: '5px' }} onClick={doContinueAsGuest}>Continue As Guest</button>
       </div>
     </>
   );

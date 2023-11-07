@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useEventPlayersContext, usePlayersContext } from '../context/FcMadBoysContext';
 import { EventPlayer } from '../../model/models';
-import { RankingColumnSort } from '../rankingColumnSort/RankingColumnSort';
+import { RankingColumnSort } from './RankingColumnSort';
 
 const Ranking: React.FC = (() => {
   const eventPlayers = useEventPlayersContext();
