@@ -98,7 +98,7 @@ const Ranking: React.FC = (() => {
             <th scope="col">Name</th>
             <th scope="col">
               <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-              <span>Games#</span>
+              <span>#Games</span>
               <RankingColumnSort property={'games'} callbackFunction={calculateRankingRows}/>
               </div>
             </th>
