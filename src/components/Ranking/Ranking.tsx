@@ -110,13 +110,13 @@ const Ranking: React.FC = (() => {
             </th>
             <th scope="col">
               <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-              <span>#Yellow Card</span>
+              <span>#Yellow Cards</span>
               <RankingColumnSort property={'yellowCard'} callbackFunction={calculateRankingRows}/>
               </div>
             </th>
             <th scope="col">
               <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-              <span>#Red Card</span>
+              <span>#Red Cards</span>
               <RankingColumnSort property={'redCard'} callbackFunction={calculateRankingRows}/>
               </div>
             </th>
