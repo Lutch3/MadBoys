@@ -1,4 +1,4 @@
-import { Ranking } from '../components/ranking/Ranking';
+import { Ranking } from '../components/rankings/Ranking';
 import { useApiContext, useAuthentifiedContext } from '../components/context/FcMadBoysContext';
 import { AddEvent } from '../components/events/AddEvent';
 import { EventsList } from '../components/events/EventsList';
