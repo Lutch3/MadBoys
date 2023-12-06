@@ -36,11 +36,6 @@ export const FcMadBoys: React.FC = () => {
     });
   };
 
-  const onNavClickHandler = (event:any):undefined => {
-    console.log(event)
-    // setSelectedNav(nav);
-  }
-
   const buttonClikedHandler = (nav:any):undefined => {
     setSelectedNav(nav);
   }
