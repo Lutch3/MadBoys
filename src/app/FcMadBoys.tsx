@@ -12,6 +12,7 @@ import { logout } from '../service/FcMadBoysService';
 import logo from '../assets/madLogo.jpg';
 import oneUp from '../assets/oneUp.png';
 import seb from '../assets/SEB.png';
+import latinos from '../assets/latinos.png';
 import { useState } from 'react';
 
 export const FcMadBoys: React.FC = () => {
@@ -80,6 +81,9 @@ export const FcMadBoys: React.FC = () => {
               <div style={{ marginTop:'15px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'space-around', width: '100%', flexWrap:'wrap'}}>
                 <a href='http://se-belgique.com/' target='_blank'>
                   <img src={seb} className="logo" style={{margin:'10px',width: '375px', height: '75px' }} />
+                </a>
+                <a href='https://www.instagram.com/latinosbar.be/' target='_blank'>
+                  <img src={latinos} className="logo" style={{margin:'10px',width: '300px', height: '300px' }} />
                 </a>
                 <a href='https://www.one-up.be/' target='_blank'>
                   <img src={oneUp} className="logo" style={{margin:'10px', width: '200px', height: '200px' }} />
