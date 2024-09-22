@@ -16,7 +16,7 @@ interface AddEventPlayerProps {
 
 const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEventPlayerProps) => {
   const AnswerEnum = { YES: 'Yes', NO: 'No' };
-
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
   const [showModal, setShowModal] = useState(false);
   const [eventPlayersListGroups, setEventPlayersListGroups] = useState<any[]>([]);
   const [eventPlayer2delete, setEventPlayer2delete] = useState({id:''
@@ -26,14 +26,15 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
                                                               ,hasRedCard: false
                                                               ,isDelegue: false
                                                               ,isCaptain: false
-                                                              ,goals:0});
+                                                              ,goals:0
+                                                              ,season:selectedSeason});
 
   
   const allEventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
   const isAuthentified = useAuthentifiedContext();
   const { setEventPlayers } = useApiContext();
-  const selectedSeason = useAtomValue(selectedSeasonAtom);
+  
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
