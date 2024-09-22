@@ -18,14 +18,15 @@ interface EventsListProps {
 
 const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProps) => {
   const AnswerEnum = { YES: 'Yes', NO: 'No' };
-
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
   const [showModal, setShowModal] = useState(false);
   const [event2delete, setEvent2delete] = useState({ id:''
                                                     ,date: ''
                                                     ,homeTeamId: ''
                                                     ,awayTeamId: ''
                                                     ,homeTeamScore: 0
-                                                    ,awayTeamScore:0});
+                                                    ,awayTeamScore:0
+                                                    ,season:selectedSeason});
 
 
   const allEvents = useEventsContext();
@@ -34,7 +35,6 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
   const players = usePlayersContext();
   const isAuthentified = useAuthentifiedContext();
   const { setEvents,setEventPlayers } = useApiContext();
-  const selectedSeason = useAtomValue(selectedSeasonAtom);
 
   const getTeamsScore = (event:Event) => {
     const homeTeam = teams.find((g) => g.id === event.homeTeamId)?.name;
