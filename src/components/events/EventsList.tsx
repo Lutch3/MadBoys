@@ -9,6 +9,8 @@ import { EventPlayersList } from '../EventPlayer/EventPlayersList';
 import * as Icon from 'react-bootstrap-icons';
 import { Event, EventPlayer, Player } from '../../model/models';
 import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
+import { useAtomValue } from 'jotai';
+import { selectedSeasonAtom } from '../../stores/MadboysStore';
 
 interface EventsListProps {
   readOnly: boolean;
@@ -26,12 +28,13 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
                                                     ,awayTeamScore:0});
 
 
-  const events = useEventsContext();
+  const allEvents = useEventsContext();
   const eventPlayers = useEventPlayersContext();
   const teams = useTeamsContext();
   const players = usePlayersContext();
   const isAuthentified = useAuthentifiedContext();
   const { setEvents,setEventPlayers } = useApiContext();
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
 
   const getTeamsScore = (event:Event) => {
     const homeTeam = teams.find((g) => g.id === event.homeTeamId)?.name;
@@ -52,7 +55,7 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
 
   const eventsListGroups = readOnly
     ? []
-    : events?.map((event: any) => {
+    : allEvents.filter((e:any)=>e.season === selectedSeason)?.map((event: any) => {
         const dateString = new Date(event.date).toDateString();
         return (
           <div style={{ display: 'flex', flexDirection: 'column', border: '1px solid #ccc', padding: '20px', borderRadius: '16px' }}>
@@ -75,7 +78,7 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
       });
   useEffect(() => {
     console.log('Rendering EventsList');
-  }, [events]);
+  }, [allEvents, selectedSeason]);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);  
@@ -91,7 +94,7 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
     removeEventPlayersForEvent(event2delete.id)
     .then( () => {
       removeEvent(event2delete).then(() => {
-        let eventsArray: any[] = JSON.parse(JSON.stringify(events));
+        let eventsArray: any[] = JSON.parse(JSON.stringify(allEvents));
         eventsArray = eventsArray.filter((item) => item.id !== event2delete.id);
         setEvents(eventsArray);
 
@@ -131,7 +134,7 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
 
   const calculateEventRows = () => {
     const listOfEvents:any[] = [];
-    events.forEach( (value:any) => {
+    allEvents.filter((e:any) => e.season === selectedSeason ).forEach( (value:any) => {
       const date = new Date(value.date);
       const row:any = { id: value.id
                   , date: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()
@@ -183,9 +186,9 @@ const EventsList: React.FC<EventsListProps> = memo(({ readOnly }: EventsListProp
   if (!readOnly) {
     return (
       <>
-        {events && events.length > 0 && <ListGroup> {eventsListGroups} </ListGroup>}
+        {allEvents && allEvents.length > 0 && <ListGroup> {eventsListGroups} </ListGroup>}
 
-        {(!events || events.length === 0) && <span>Please add Events</span>}
+        {(!allEvents || allEvents.length === 0) && <span>Please add Events</span>}
 
         <ModalDeleteDialog
           showModal={showModal}

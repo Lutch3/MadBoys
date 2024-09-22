@@ -109,7 +109,8 @@ export const addEvent = async (event: Event) => {
                 , homeTeamId:event.homeTeamId
                 , awayTeamId:event.awayTeamId
                 , homeTeamScore: event.homeTeamScore
-                , awayTeamScore:event.awayTeamScore };
+                , awayTeamScore:event.awayTeamScore
+                , season:event.season};
     return obj;
   } catch (e) {
     console.error('Error adding Event document: ', e);
@@ -137,7 +138,8 @@ export const addEventPlayer = async (eventPlayer: EventPlayer) => {
                 , hasRedCard :eventPlayer.hasRedCard
                 , goals: eventPlayer.goals
                 , isDelegue:eventPlayer.isDelegue
-                , isCaptain:eventPlayer.isCaptain };
+                , isCaptain:eventPlayer.isCaptain 
+                , season : eventPlayer.season};
     return obj;
   } catch (e) {
     console.error('Error adding Event Player document: ', e);
@@ -155,7 +157,8 @@ export const updateEventPlayer = async (eventPlayer: EventPlayer) => {
                                     ,hasRedCard :eventPlayer.hasRedCard
                                     ,goals: eventPlayer.goals
                                     ,isDelegue:eventPlayer.isDelegue
-                                    ,isCaptain:eventPlayer.isCaptain })
+                                    ,isCaptain:eventPlayer.isCaptain
+                                    ,season:eventPlayer.season })
     const obj = {id: eventPlayerRef.id 
                 ,eventId:eventPlayer.eventId
                 ,playerId:eventPlayer.playerId
@@ -163,7 +166,8 @@ export const updateEventPlayer = async (eventPlayer: EventPlayer) => {
                 ,hasRedCard :eventPlayer.hasRedCard
                 ,goals: eventPlayer.goals
                 ,isDelegue:eventPlayer.isDelegue
-                ,isCaptain:eventPlayer.isCaptain };
+                ,isCaptain:eventPlayer.isCaptain
+                ,season:eventPlayer.season };
     return obj;
   } catch (e) {
     console.error('Error adding Event Player document: ', e);

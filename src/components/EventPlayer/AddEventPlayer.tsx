@@ -5,6 +5,8 @@ import {  useApiContext, useEventPlayersContext, usePlayersContext } from '../co
 import { Form } from 'react-bootstrap';
 import { EventPlayer } from '../../model/models';
 import { addEventPlayer } from '../../service/FcMadBoysService';
+import { useAtomValue } from 'jotai';
+import { selectedSeasonAtom } from '../../stores/MadboysStore';
 
 interface AddEventPlayerProps {
   eventId: string;
@@ -14,6 +16,7 @@ const AddEventPlayer: React.FC<AddEventPlayerProps> = memo( ( {eventId}: AddEven
   const players = usePlayersContext();
   const eventPlayers = useEventPlayersContext();
   const { setEventPlayers } = useApiContext();
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
 
   let selectedPlayerId:string|null|undefined = null;
 
@@ -42,7 +45,7 @@ const AddEventPlayer: React.FC<AddEventPlayerProps> = memo( ( {eventId}: AddEven
 
   const addEventPlayerClickHandler = () => {
     if (selectedPlayerId) {
-      let eventPlayerToAdd: EventPlayer = { eventId: eventId, playerId: selectedPlayerId, hasRedCard:false, hasYellowCard:false, isCaptain:false, isDelegue:false, goals:0 };
+      let eventPlayerToAdd: EventPlayer = { eventId: eventId, playerId: selectedPlayerId, hasRedCard:false, hasYellowCard:false, isCaptain:false, isDelegue:false, goals:0, season:selectedSeason };
       addEventPlayer(eventPlayerToAdd).then((addedEventPlayer: any) => {
         //refresh the collection
         let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));

@@ -7,6 +7,8 @@ import { removeEventPlayer, updateEventPlayer } from '../../service/FcMadBoysSer
 import * as Icon from 'react-bootstrap-icons';
 import { EventPlayer } from '../../model/models';
 import { ModalDeleteDialog } from '../modals/ModalDeleteDialog';
+import { useAtomValue } from 'jotai';
+import { selectedSeasonAtom } from '../../stores/MadboysStore';
 
 interface AddEventPlayerProps {
   eventId: string;
@@ -16,6 +18,7 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
   const AnswerEnum = { YES: 'Yes', NO: 'No' };
 
   const [showModal, setShowModal] = useState(false);
+  const [eventPlayersListGroups, setEventPlayersListGroups] = useState<any[]>([]);
   const [eventPlayer2delete, setEventPlayer2delete] = useState({id:''
                                                               ,eventId: ''
                                                               ,playerId: ''
@@ -26,15 +29,19 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
                                                               ,goals:0});
 
   
-  const eventPlayers = useEventPlayersContext();
+  const allEventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
   const isAuthentified = useAuthentifiedContext();
   const { setEventPlayers } = useApiContext();
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const eventPlayersListGroups = eventPlayers?.filter((ep) => ep.eventId === eventId).map((eventPlayer: any) => {
+  const calculateListGroups = () => { 
+    const filteredEventPlayersBySeason = allEventPlayers.filter((ep:any) => ep.season === selectedSeason);
+    const epBySeasonForEvent = filteredEventPlayersBySeason?.filter((ep) => ep.eventId === eventId);
+    const listGroups:any[] =  epBySeasonForEvent.map((eventPlayer: any) => {
       const player = players.find((p) => p.id === eventPlayer.playerId);
       return (
         <div style={{ display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-evenly', alignItems: 'center' }}>
@@ -61,12 +68,17 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
           </ListGroup.Item>
           {isAuthentified && <button onClick={() => deleteEventPlayer(eventPlayer)}><Icon.Trash/></button>}
         </div>
-      );
+      )
     });
+    console.log(listGroups);
+    setEventPlayersListGroups(listGroups);
+  }
+
 
   useEffect(() => {
     console.log('Rendering EventPlayersList');
-  }, [eventPlayers]);
+    calculateListGroups();
+  }, [allEventPlayers, selectedSeason]);
 
   const updateEventPlayerGoals = (eventPlayer: EventPlayer, value: any) => {
     eventPlayer.goals = value;
@@ -90,7 +102,7 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
 
   const update = (eventPlayer:EventPlayer) => {
     updateEventPlayer(eventPlayer).then(() => {
-      let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));
+      let eventPlayersArray: any[] = JSON.parse(JSON.stringify(allEventPlayers));
       setEventPlayers(eventPlayersArray);
     });
   }
@@ -103,7 +115,7 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
   const handleButtonClicked = (answer: 'Yes' | 'No') => {
     if (answer === AnswerEnum.YES) {
       removeEventPlayer(eventPlayer2delete).then(() => {
-        let eventPlayersArray: any[] = JSON.parse(JSON.stringify(eventPlayers));
+        let eventPlayersArray: any[] = JSON.parse(JSON.stringify(allEventPlayers));
         eventPlayersArray = eventPlayersArray.filter((item) => item.id !== eventPlayer2delete.id);
         setEventPlayers(eventPlayersArray);
       });
@@ -113,13 +125,10 @@ const EventPlayersList: React.FC<AddEventPlayerProps> = memo(({ eventId }: AddEv
 
   return (
     <>
-      {eventPlayers && eventPlayers.length > 0 && (
-        <div style={{ width: '700px' }}>
-          <ListGroup> {eventPlayersListGroups} </ListGroup>
-        </div>
-      )}
+      <div style={{ width: '700px' }}>
+        <ListGroup> {eventPlayersListGroups} </ListGroup>
+      </div>
 
-      {(!eventPlayers || eventPlayers.length === 0) && <span>Please add Event Players</span>}
       <ModalDeleteDialog
         showModal={showModal}
         buttonClickedHandler={handleButtonClicked}

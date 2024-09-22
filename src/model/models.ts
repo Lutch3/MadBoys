@@ -16,6 +16,7 @@ export interface Event {
   homeTeamScore:number
   awayTeamId: string;
   awayTeamScore:number;
+  season:string;
 }
 
 export interface EventPlayer {
@@ -27,4 +28,5 @@ export interface EventPlayer {
   isDelegue:boolean;
   isCaptain:boolean;
   goals:number;
+  season:string;
 }

@@ -15,10 +15,12 @@
     "dayjs": "^1.11.9",
     "fetch-intercept": "^2.4.0",
     "firebase": "^10.5.0",
+    "jotai": "^2.10.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-bootstrap-icons": "^1.10.3",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-select": "^5.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

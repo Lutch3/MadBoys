@@ -5,11 +5,14 @@ import { useApiContext, useEventsContext, useTeamsContext } from '../context/FcM
 import { Event, Team } from '../../model/models';
 import { addEvent } from '../../service/FcMadBoysService';
 import { Form } from 'react-bootstrap';
+import { useAtomValue } from 'jotai';
+import { selectedSeasonAtom } from '../../stores/MadboysStore';
 
 const AddEvent: React.FC = memo(() => {
-  const events = useEventsContext();
+  const allEvents = useEventsContext();
   const teams = useTeamsContext();
   const { setEvents } = useApiContext();
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
 
   let selectedHomeTeamId: string | null | undefined = null;
   let selectedAwayTeamId: string | null | undefined = null;
@@ -22,7 +25,7 @@ const AddEvent: React.FC = memo(() => {
     homeTeamScore = 0;
     awayTeamScore = 0;
     dateString = '';
-  }, [teams]);
+  }, [teams, selectedSeason]);
 
   const createTeamOptions = () => {
     let items: any[] = [];
@@ -47,10 +50,11 @@ const AddEvent: React.FC = memo(() => {
                               , homeTeamScore:homeTeamScore
                               , awayTeamId: selectedAwayTeamId 
                               , awayTeamScore:awayTeamScore 
+                              , season : selectedSeason
                             };
       addEvent(eventToAdd).then((addedEvent: any) => {
         //refresh the collection
-        let eventsArray: any[] = JSON.parse(JSON.stringify(events));
+        let eventsArray: any[] = JSON.parse(JSON.stringify(allEvents));
         eventsArray.unshift(addedEvent);
         setEvents(eventsArray);
       });

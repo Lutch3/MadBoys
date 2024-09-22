@@ -15,10 +15,32 @@ import seb from '../assets/SEB.png';
 import latinos from '../assets/latinos.png';
 import akt from '../assets/akt.jpg';
 import { useState } from 'react';
+import ReactSelect from 'react-select';
+import { useSetAtom } from 'jotai';
+import { selectedSeasonAtom } from '../stores/MadboysStore';
 
 export const FcMadBoys: React.FC = () => {
   const isAuthentified = useAuthentifiedContext();
   const { setIsAuthentified } = useApiContext();
+  const setSelectedSeason = useSetAtom(selectedSeasonAtom);
+  const seasons = [
+    {
+      seasonNumber : "1",
+      seasonName: "2023-2024"
+    },
+    {
+      seasonNumber : "2",
+      seasonName: "2024-2025"
+    }
+  ];
+
+  const options = seasons.map((season, index) => {
+    return {
+       label: season.seasonName,
+       value: season.seasonNumber,
+       key: index
+    }
+  });
 
   const Navigations = {
     Home: "home",
@@ -29,7 +51,6 @@ export const FcMadBoys: React.FC = () => {
   }
 
   const [selectedNav, setSelectedNav] = useState(Navigations.Home);
-
 
   const doLogout = () => {
     logout().then(() => {
@@ -53,6 +74,13 @@ export const FcMadBoys: React.FC = () => {
         { isAuthentified &&
           <button onClick={()=> buttonClikedHandler(Navigations.Setup)}>Setup</button>
         } 
+      </div>
+      <div style={{display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
+        <label>Choose a Season:</label>
+        <ReactSelect
+          onChange={ (e:any) => setSelectedSeason(e.value) }
+          options={options}
+          defaultValue={options[1]}/>
       </div>
 
       {/* LOGIN */}

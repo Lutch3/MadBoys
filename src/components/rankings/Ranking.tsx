@@ -3,22 +3,27 @@ import { useEffect, useState } from 'react';
 import { useEventPlayersContext, usePlayersContext } from '../context/FcMadBoysContext';
 import { EventPlayer } from '../../model/models';
 import { RankingColumnSort } from './RankingColumnSort';
+import { useAtomValue } from 'jotai';
+import { selectedSeasonAtom } from '../../stores/MadboysStore';
 
 const Ranking: React.FC = (() => {
   const eventPlayers = useEventPlayersContext();
   const players = usePlayersContext();
+  const selectedSeason = useAtomValue(selectedSeasonAtom);
 
   const [rankingRows, setRankingRows] = useState<any[]>([]);
 
   let rankingArray:any[] = [];
+  let filteredEventPlayers:any[];
 
   useEffect(() => {
+    filteredEventPlayers = eventPlayers.filter((ep) => ep.season === selectedSeason);
     calculateRankingRows('ratio','Asc');
-  }, [eventPlayers]);
+  }, [eventPlayers, selectedSeason]);
 
   const createRankingArray = () => {
     const rankingMap = new Map();
-    eventPlayers.forEach((eventPlayer:EventPlayer) => {
+    filteredEventPlayers.forEach((eventPlayer:EventPlayer) => {
       const { playerId, hasYellowCard, hasRedCard, isDelegue, goals } = eventPlayer;
 
       if (!rankingMap.has(playerId)) {
