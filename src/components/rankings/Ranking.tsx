@@ -14,16 +14,14 @@ const Ranking: React.FC = (() => {
   const [rankingRows, setRankingRows] = useState<any[]>([]);
 
   let rankingArray:any[] = [];
-  let filteredEventPlayers:any[];
 
   useEffect(() => {
-    filteredEventPlayers = eventPlayers.filter((ep) => ep.season === selectedSeason);
     calculateRankingRows('ratio','Asc');
   }, [eventPlayers, selectedSeason]);
 
   const createRankingArray = () => {
     const rankingMap = new Map();
-    filteredEventPlayers.forEach((eventPlayer:EventPlayer) => {
+    eventPlayers.filter((ep) => ep.season === selectedSeason).forEach((eventPlayer:EventPlayer) => {
       const { playerId, hasYellowCard, hasRedCard, isDelegue, goals } = eventPlayer;
 
       if (!rankingMap.has(playerId)) {
