@@ -16,6 +16,7 @@ import pps from '../assets/pps.jpg';
 import seb from '../assets/SEB.png';
 import latinos from '../assets/latinos.png';
 import akt from '../assets/akt.jpg';
+import topdelice from '../assets/topdelice.jpg';
 import { useState } from 'react';
 import ReactSelect from 'react-select';
 import { useSetAtom } from 'jotai';
@@ -119,6 +120,9 @@ export const FcMadBoys: React.FC = () => {
                 </a>
                 <a href='https://traiteurtheofanis.com/' target='_blank'>
                   <img src={traiteurTheo} className="logo" style={{margin:'10px', width: '250px', height: '250px' }} />
+                </a>
+                <a href='https://www.topdelice.com/' target='_blank'>
+                  <img src={topdelice} className="logo" style={{margin:'10px', width: '250px', height: 'auto' }} />
                 </a>
                 <a href='https://one-up-six.vercel.app/' target='_blank'>
                   <img src={oneUp} className="logo" style={{margin:'10px', width: '200px', height: '200px' }} />
