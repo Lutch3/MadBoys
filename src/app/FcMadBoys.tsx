@@ -9,7 +9,7 @@ import { PlayersList } from '../components/players/PlayersList';
 import { Login } from '../components/Login/Login';
 import * as Icon from 'react-bootstrap-icons';
 import { logout } from '../service/FcMadBoysService';
-import logo from '../assets/madLogo.jpg';
+import logo from '../assets/madboys.jpg';
 import oneUp from '../assets/oneUp.png';
 import seb from '../assets/SEB.png';
 import latinos from '../assets/latinos.png';
@@ -85,8 +85,7 @@ export const FcMadBoys: React.FC = () => {
 
       {/* LOGIN */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center'}}>
-            <img src={logo} className="logo" style={{ width: 'auto', height: 'auto' }} />
-            <h3>FC Mad Boys</h3>
+            <img src={logo} className="logo" style={{ width: '500px', height: 'auto' }} />
         {isAuthentified && (
           <span style={{ width: '25px' }} className="logout" onClick={doLogout}>
             Logout
@@ -101,7 +100,6 @@ export const FcMadBoys: React.FC = () => {
         <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignContent: 'center', justifyContent: 'center' }}>
           <div style={{ margin: '5px', marginTop:'20px', width:'50%'}} >
             <p><strong>FC MadBoys</strong> est un <strong>club de football en salle</strong> inscrit à la <a rel="noreferrer noopener" href="https://www.bzvc.be" target="_blank">Brusselse Zaal Voetbal Competitie (BZVC)</a> depuis 2018.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             <p>Suivez nous sur Instagram</p>
             <a href="https://www.instagram.com/mad.boys.fc/" target='_blank'><Icon.Instagram  style={{ marginRight:'5px', width:'50px', height:'50px',color:'black'}}/></a>
 
