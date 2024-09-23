@@ -21,7 +21,8 @@ const Ranking: React.FC = (() => {
 
   const createRankingArray = () => {
     const rankingMap = new Map();
-    eventPlayers.filter((ep) => ep.season === selectedSeason).forEach((eventPlayer:EventPlayer) => {
+    const cscPlayer = players.find((p) => p.name === 'CSC');
+    eventPlayers.filter((ep) => ep.season === selectedSeason && ep.playerId !== cscPlayer?.id).forEach((eventPlayer:EventPlayer) => {
       const { playerId, hasYellowCard, hasRedCard, isDelegue, goals } = eventPlayer;
 
       if (!rankingMap.has(playerId)) {
